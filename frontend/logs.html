@@ -1,0 +1,144 @@
+<!-- Logs Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="path/to/your/favicon.ico" type="image/x-icon">
+  <title>Study Logs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/globals.css"/>
+  <link rel="stylesheet" href="styles/components.css"/>
+  <link rel="stylesheet" href="styles/animations.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen animate-page-enter">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="bg-white shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <h1 class="text-2xl font-bold text-gray-800">SRM Study Buddy</h1>
+                    </div>
+                    <nav class="flex space-x-4">
+                        <a href="index.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="logs.html" class="bg-blue-100 text-blue-700 px-3 py-2 rounded-md text-sm font-medium">Study Log</a>
+                        <a href="quiz.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Quiz</a>
+                        <a href="practice.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Practice</a>
+                        <a href="communication-test.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Speech Practice</a>
+                        <a href="feedback.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
+                        <a href="history.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">History</a>
+                        <div id="notification-container"></div>
+                    </nav>
+                </div>
+            </div>
+        </header>
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Study Logs</h2>
+                <p class="text-gray-600">Manage and track your study sessions and progress.</p>
+            </div>
+            <button onclick="showCreateLogModal()" class="btn btn-primary hover-lift">
+                <span class="mr-2">+</span> New Log
+            </button>
+        </div>
+
+    <div id="create-log-modal" class="modal-overlay hidden">
+      <div class="modal-content w-full max-w-md">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Create New Study Log</h2>
+        <form id="create-log-form" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+            <input type="text" id="log-title" required class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="e.g., Algorithms Study Session">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Content</label>
+            <textarea id="log-content" required class="w-full h-32 px-4 py-2 border border-gray-300 rounded-lg" placeholder="Paste your notes..."></textarea>
+          </div>
+          <div class="flex gap-3 pt-2">
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg">Create Log</button>
+            <button type="button" onclick="hideCreateLogModal()" class="bg-gray-600 text-white px-6 py-2 rounded-lg">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="logs-container">
+      <div class="card text-center py-16 animate-card-stagger">
+        <div class="w-16 h-16 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full flex items-center justify-center mx-auto mb-6">
+          <span class="text-2xl text-gray-500">📝</span>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-700 mb-3">No study logs yet</h3>
+        <p class="text-gray-500 mb-6">Create your first log to get started with AI-powered quizzes!</p>
+        <button onclick="showCreateLogModal()" class="btn btn-primary">
+          <span class="mr-2">+</span> Create First Log
+        </button>
+      </div>
+    </div>
+
+    <div id="log-detail-modal" class="modal-overlay hidden">
+      <div class="modal-content w-full max-w-2xl">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold text-gray-800" id="log-detail-title"></h2>
+          <button onclick="hideLogDetailModal()" class="text-gray-400 hover:text-gray-600">✕</button>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Content</label>
+          <div class="bg-gray-50 p-4 rounded-lg" id="log-detail-content"></div>
+        </div>
+        <div class="flex gap-3">
+          <button onclick="useLogForQuiz()" class="bg-blue-600 text-white px-6 py-2 rounded-lg">Use for Quiz</button>
+          <button onclick="deleteCurrentLog()" class="bg-red-600 text-white px-6 py-2 rounded-lg">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="fixed top-6 right-6 z-50 space-y-3"></div>
+  <script>
+    // Make these functions globally available
+    window.showLog = function(id) {
+      const log = StudyLogsManager.get(id);
+      if (!log) return;
+      document.getElementById('log-detail-title').textContent = log.title;
+      document.getElementById('log-detail-content').textContent = log.content;
+      document.getElementById('log-detail-modal').classList.remove('hidden');
+      window.currentLogId = id;
+    };
+    
+    window.hideLogDetailModal = function() { 
+      document.getElementById('log-detail-modal').classList.add('hidden'); 
+      window.currentLogId = null; 
+    };
+    
+    window.deleteCurrentLog = function() { 
+      if (!window.currentLogId) return; 
+      StudyLogsManager.delete(window.currentLogId); 
+      hideLogDetailModal(); 
+      render(); 
+    };
+    
+    window.useLogForQuiz = function() { 
+      const log = StudyLogsManager.get(window.currentLogId); 
+      if (!log) return; 
+      sessionStorage.setItem('selected_log_content', log.content);
+      hideLogDetailModal();
+      if (window.Toast) {
+        window.Toast.success('Log selected for quiz!');
+      }
+      navigateTo('quiz.html');
+    };
+  </script>
+  <script type="module" src="js/utils.js"></script>
+  <script type="module" src="js/api.js"></script>
+  <script type="module" src="js/components/toast.js"></script>
+  <script type="module" src="js/components/notifications.js"></script>
+  <script type="module" src="js/components/studyLogs.js"></script>
+  <script type="module" src="js/pages/logs.js"></script>
+</body>
+</html>

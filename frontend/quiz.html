@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" href="path/to/your/favicon.ico" type="image/x-icon">
+    <title>Take Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/globals.css"/>
+    <link rel="stylesheet" href="styles/components.css"/>
+    <link rel="stylesheet" href="styles/animations.css"/>
+    <style>
+      .floating-submit {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 50;
+        padding: 0.75rem 1.5rem;
+        background-color: #ef4444;
+        color: white;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.2s ease-in-out;
+        border: none;
+        cursor: pointer;
+      }
+      .floating-submit:hover {
+        background-color: #dc2626;
+        transform: translateY(-2px);
+      }
+      .floating-submit:active {
+        transform: translateY(0);
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/components/toast.js" type="module"></script>
+  </head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen animate-page-enter">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">SRM Study Buddy</h1>
+                </div>
+                <nav class="flex space-x-4">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="logs.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Study Log</a>
+                    <a href="quiz.html" class="bg-blue-100 text-blue-700 px-3 py-2 rounded-md text-sm font-medium">Quiz</a>
+                    <a href="practice.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Practice</a>
+                    <a href="communication-test.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Speech Practice</a>
+                    <a href="feedback.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
+                    <a href="history.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">History</a>
+                    <div id="notification-container"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Take Quiz</h2>
+            <p class="text-gray-600">Generate and take personalized quizzes based on your study logs.</p>
+        </div>
+        
+        <div class="flex items-center gap-6 mb-8">
+            <div class="bg-white rounded-lg px-4 py-2 text-gray-800 font-medium shadow-sm" id="quiz-timer">00:00</div>
+            <div class="bg-white rounded-lg px-4 py-2 text-gray-800 font-medium shadow-sm" id="question-counter">Question 0/0</div>
+        </div>
+
+    <div id="quiz-generator" class="max-w-3xl mx-auto">
+      <div class="card animate-card-stagger">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl text-white">🧠</span>
+          </div>
+          <h2 class="text-3xl font-semibold text-gray-800 mb-4">Generate Personalized Quiz</h2>
+          <p class="text-gray-600 text-lg">Your quiz will be generated from your study logs. Select a log to use:</p>
+        </div>
+        <div class="mb-8">
+          <label class="block text-sm font-medium text-gray-700 mb-3">Select Study Log</label>
+          <select id="study-log-select" class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all">
+            <option value="">Loading study logs...</option>
+          </select>
+        </div>
+        <button onclick="generateQuiz()" class="btn btn-primary w-full py-4 text-lg hover-lift">
+          <span class="mr-2">🚀</span> Generate 20 MCQs
+        </button>
+      </div>
+    </div>
+
+    <div id="quiz-container" class="hidden max-w-4xl mx-auto">
+      <div class="card">
+        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+          <div id="quiz-progress" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+        </div>
+        
+        <div id="mcq-section" class="hidden">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Multiple Choice Question</h3>
+          <div id="mcq-question" class="mb-6">
+            <p class="text-lg text-gray-700 mb-4" id="mcq-question-text"></p>
+            <div id="mcq-options" class="space-y-3">
+              </div>
+          </div>
+        </div>
+        
+        <div class="flex justify-between items-center pt-4 border-t border-gray-200">
+          <button id="prev-question" class="px-4 py-2 text-blue-600 hover:text-blue-800 font-medium">
+            ← Previous
+          </button>
+          <div class="flex space-x-4">
+            <button id="next-question" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">
+              Next Question
+            </button>
+            <button id="submit-quiz" class="hidden px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium">
+              Submit Quiz
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="results-container" class="hidden max-w-4xl mx-auto">
+      <div class="card">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Quiz Results</h2>
+        
+        <div class="grid grid-cols-2 gap-6 mb-8">
+          <div class="bg-blue-50 p-6 rounded-lg text-center">
+            <div class="text-4xl font-bold text-blue-600" id="quiz-score">0%</div>
+            <div class="text-gray-600">Score</div>
+          </div>
+          <div class="bg-green-50 p-6 rounded-lg text-center">
+            <div class="text-4xl font-bold text-green-600" id="quiz-time">00:00</div>
+            <div class="text-gray-600">Time Taken</div>
+          </div>
+        </div>
+        
+        <div id="results-list" class="space-y-4 mb-6">
+          </div>
+        
+        <div class="flex justify-center space-x-4 pt-4 border-t border-gray-200">
+          <button onclick="retryQuiz()" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium">
+            Try Again
+          </button>
+          <button onclick="saveToHistory()" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium">
+            Save to History
+          </button>
+          <a href="logs.html" class="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 font-medium inline-flex items-center">
+            View History
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Submit Button -->
+  <button id="floating-submit" class="floating-submit hidden">
+    Submit Quiz
+  </button>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed top-6 right-6 z-50 space-y-3"></div>
+  
+  <script>
+    // Set the API base URL to point to the backend server
+    window.API_BASE = 'http://localhost:8000';
+  </script>
+  <script type="module" src="js/utils.js"></script>
+  <script type="module" src="js/api.js"></script>
+  <script type="module" src="js/components/toast.js"></script>
+  <script type="module" src="js/components/studyLogs.js"></script>
+  <script type="module" src="js/components/notifications.js"></script>
+  <script type="module" src="js/pages/quiz.js"></script>
+</body>
+</html>

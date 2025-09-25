@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer components {
+  .btn {
+    @apply px-6 py-3 rounded-xl font-medium text-white bg-gradient-to-r from-primary-500 to-secondary-500 hover:from-primary-600 hover:to-secondary-600 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-primary-100;
+  }
+  
+  .card {
+    @apply bg-white rounded-2xl shadow-lg p-8 border border-gray-100;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent;
+  }
+  
+  .toast {
+    @apply px-6 py-3 rounded-lg shadow-lg text-white font-medium animate-toast-in;
+  }
+  
+  .toast.success {
+    @apply bg-green-500;
+  }
+  
+  .toast.error {
+    @apply bg-red-500;
+  }
+  
+  .toast.info {
+    @apply bg-blue-500;
+  }
+  
+  .toast.warning {
+    @apply bg-yellow-500;
+  }
+}

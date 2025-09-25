@@ -1,0 +1,246 @@
+<!-- History Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="static/favicon.ico" type="image/x-icon">
+  <title>Study History - SRM Study Buddy</title>
+  <link rel="stylesheet" href="styles/globals.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Set API base URL
+    window.API_BASE = 'http://localhost:8000';
+  </script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">SRM Study Buddy</h1>
+                </div>
+                <nav class="flex space-x-4">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="logs.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Study Log</a>
+                    <a href="quiz.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Quiz</a>
+                    <a href="practice.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Practice</a>
+                    <a href="communication-test.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Speech Practice</a>
+                    <a href="feedback.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
+                    <a href="history.html" class="bg-blue-100 text-blue-700 px-3 py-2 rounded-md text-sm font-medium">History</a>
+                    <div id="notification-container"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Study History</h2>
+            <p class="text-gray-600">View your complete study history including quizzes, practice sessions, and speech practice sessions.</p>
+        </div>
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+      <div class="stat-card">
+        <div class="text-3xl font-bold text-blue-600" id="total-sessions">0</div>
+        <div class="text-gray-600">Total Sessions</div>
+      </div>
+      <div class="stat-card">
+        <div class="text-3xl font-bold text-green-600" id="quiz-sessions">0</div>
+        <div class="text-gray-600">Quiz Sessions</div>
+      </div>
+      <div class="stat-card">
+        <div class="text-3xl font-bold text-purple-600" id="coding-sessions">0</div>
+        <div class="text-gray-600">Coding Practices</div>
+      </div>
+      <div class="stat-card">
+        <div class="text-3xl font-bold text-yellow-600" id="communication-sessions">0</div>
+        <div class="text-gray-600">Communication Tests</div>
+      </div>
+      <div class="stat-card">
+        <div class="text-3xl font-bold text-orange-600" id="avg-score">0%</div>
+        <div class="text-gray-600">Avg. Quiz Score</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb-6">
+      <div class="flex flex-wrap gap-4 items-end">
+        <div class="flex-1 min-w-[200px]">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Filter by Type</label>
+          <select id="type-filter" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+            <option value="all">All Activities</option>
+            <option value="quiz">Quizzes</option>
+            <option value="coding">Coding Practice</option>
+            <option value="communication">Communication Tests</option>
+          </select>
+        </div>
+        <div class="flex-1 min-w-[200px]">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Date Range</label>
+          <select id="date-filter" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+            <option value="today">Today</option>
+            <option value="week">Last 7 days</option>
+            <option value="month">Last 30 days</option>
+            <option value="all">All time</option>
+          </select>
+        </div>
+        <button onclick="document.applyFilters()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors">
+          Apply Filters
+        </button>
+      </div>
+    </div>
+
+    <!-- History Table -->
+    <div class="card overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Question</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+              <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body" class="bg-white divide-y divide-gray-200">
+            <!-- Rows will be populated by JavaScript -->
+            <tr class="debug-row" style="display: none;">
+              <td colspan="6" class="px-6 py-4 text-center text-sm text-yellow-600">
+                Debug: Table is being rendered with JavaScript
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-4 right-4 hidden">
+    <div class="bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center">
+      <span id="toast-message"></span>
+    </div>
+  </div>
+
+  <script>
+    // Toast notification system
+    window.Toast = {
+      show: function(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        
+        // Set message and styling based on type
+        toastMessage.textContent = message;
+        toast.className = `fixed bottom-4 right-4 px-4 py-2 rounded-lg shadow-lg flex items-center ${
+          type === 'error' ? 'bg-red-500' : 
+          type === 'success' ? 'bg-green-500' : 'bg-blue-500'
+        } text-white`;
+        
+        // Show toast
+        toast.classList.remove('hidden');
+        
+        // Auto hide after 3 seconds
+        setTimeout(() => {
+          toast.classList.add('hidden');
+        }, 3000);
+      },
+      
+      success: function(message) {
+        this.show(message, 'success');
+      },
+      
+      error: function(message) {
+        this.show(message, 'error');
+      },
+      
+      info: function(message) {
+        this.show(message, 'info');
+      }
+    };
+
+    // Navigation helper
+    window.navigateTo = function(page) {
+      window.location.href = page;
+    };
+  </script>
+  
+  <!-- Storage Helper -->
+  <script>
+    const Storage = {
+      get: function(key, defaultValue = []) {
+        try {
+          const item = localStorage.getItem(key);
+          return item ? JSON.parse(item) : defaultValue;
+        } catch (error) {
+          console.error(`Error reading from localStorage:`, error);
+          return defaultValue;
+        }
+      },
+      
+      set: function(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+          return true;
+        } catch (error) {
+          console.error(`Error writing to localStorage:`, error);
+          return false;
+        }
+      }
+    };
+  </script>
+  
+  <!-- Main History Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM fully loaded, initializing history page...');
+      // Load history when the page loads
+      if (typeof loadHistory === 'function') {
+        loadHistory();
+      } else {
+        console.error('loadHistory function not found');
+      }
+      
+      // Initialize filter change listeners
+      const typeFilter = document.getElementById('type-filter');
+      const dateFilter = document.getElementById('date-filter');
+      
+      if (typeFilter) {
+        typeFilter.addEventListener('change', function() {
+          console.log('Type filter changed to:', this.value);
+          if (typeof document.applyFilters === 'function') {
+            document.applyFilters();
+          }
+        });
+      }
+      
+      if (dateFilter) {
+        dateFilter.addEventListener('change', function() {
+          console.log('Date filter changed to:', this.value);
+          if (typeof document.applyFilters === 'function') {
+            document.applyFilters();
+          }
+        });
+      }
+      
+      // Make sure the table body exists
+      const tbody = document.getElementById('history-table-body');
+      console.log('Table body element:', tbody ? 'Found' : 'Not found');
+      
+      // Log the entire document structure for debugging
+      console.log('Document structure:', document.documentElement.outerHTML);
+    });
+  </script>
+  <script src="js/pages/history.js"></script>
+  <script type="module" src="js/utils.js"></script>
+  <script type="module" src="js/api.js"></script>
+  <script type="module" src="js/components/toast.js"></script>
+  <script type="module" src="js/components/notifications.js"></script>
+</body>
+</html>

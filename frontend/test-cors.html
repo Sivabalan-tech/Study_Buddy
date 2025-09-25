@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-container {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>CORS Test Page</h1>
+    
+    <div class="test-container">
+        <h2>Test GET Request</h2>
+        <button onclick="testGetRequest()">Test GET /test-cors</button>
+        <h3>Response:</h3>
+        <pre id="get-response">Click the button to test</pre>
+    </div>
+
+    <div class="test-container">
+        <h2>Test POST Request</h2>
+        <button onclick="testPostRequest()">Test POST /coding/generate</button>
+        <h3>Response:</h3>
+        <pre id="post-response">Click the button to test</pre>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8000';
+        
+        async function testGetRequest() {
+            const responseElement = document.getElementById('get-response');
+            responseElement.textContent = 'Sending GET request...';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/test-cors`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    mode: 'cors',
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                responseElement.textContent = `Status: ${response.status}\n${JSON.stringify(data, null, 2)}`;
+                console.log('GET Response:', data);
+            } catch (error) {
+                responseElement.textContent = `Error: ${error.message}\n${error.stack || ''}`;
+                console.error('GET Error:', error);
+            }
+        }
+        
+        async function testPostRequest() {
+            const responseElement = document.getElementById('post-response');
+            responseElement.textContent = 'Sending POST request...';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/coding/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        topic: 'test',
+                        difficulty: 'easy'
+                    }),
+                    mode: 'cors',
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                responseElement.textContent = `Status: ${response.status}\n${JSON.stringify(data, null, 2)}`;
+                console.log('POST Response:', data);
+            } catch (error) {
+                responseElement.textContent = `Error: ${error.message}\n${error.stack || ''}`;
+                console.error('POST Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!-- Practice Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="assets/icon.png" type="image/png">
+  <title>Practice Coding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/globals.css"/>
+  <link rel="stylesheet" href="styles/components.css"/>
+  <link rel="stylesheet" href="styles/animations.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Set the API base URL to localhost:8000
+    window.API_BASE = 'http://localhost:8000';
+  </script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen animate-page-enter">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">SRM Study Buddy</h1>
+                </div>
+                <nav class="flex space-x-4">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="logs.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Study Log</a>
+                    <a href="quiz.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Quiz</a>
+                    <a href="practice.html" class="bg-blue-100 text-blue-700 px-3 py-2 rounded-md text-sm font-medium">Practice</a>
+                    <a href="communication-test.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Speech Practice</a>
+                    <a href="feedback.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
+                    <a href="history.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">History</a>
+                    <div id="notification-container"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Practice Coding</h2>
+            <p class="text-gray-600">Generate and solve coding practice questions to improve your programming skills.</p>
+        </div>
+
+    <div class="max-w-3xl mx-auto mb-16">
+      <div class="card animate-card-stagger">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl text-white">💻</span>
+          </div>
+          <h2 class="text-3xl font-semibold text-gray-800 mb-4">Generate Practice Questions</h2>
+          <p class="text-gray-600 text-lg">Create personalized coding challenges to improve your skills</p>
+        </div>
+        <form id="practice-form" class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-3">Topic</label>
+            <input type="text" id="topic" required class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all" placeholder="e.g., Sorting Algorithms, Data Structures, Algorithms">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-3">Difficulty Level</label>
+            <select id="level" required class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:ring-4 focus:ring-primary-100 transition-all">
+              <option value="Beginner">Beginner - Basic concepts and simple problems</option>
+              <option value="Intermediate">Intermediate - Moderate complexity</option>
+              <option value="Advanced">Advanced - Complex algorithms and optimization</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary w-full py-4 text-lg hover-lift">
+            <span class="mr-2">✨</span> Generate Questions
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div id="questions-section" class="hidden">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Your Practice Questions</h2>
+      <div id="questions-container" class="space-y-6 max-w-4xl mx-auto"></div>
+    </div>
+
+    <div id="editor-section" class="hidden mt-12">
+      <div class="card">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Code Editor</h2>
+        <div class="mb-4">
+          <h3 class="text-lg font-medium text-gray-700 mb-2" id="current-question-title">Question</h3>
+          <p class="text-gray-600" id="current-question-text"></p>
+        </div>
+        <div class="mb-4">
+          <textarea id="code-editor" class="w-full h-48 px-4 py-3 border border-gray-300 rounded-lg font-mono text-sm" placeholder="Write your code here..."></textarea>
+        </div>
+        <div class="flex gap-3">
+          <button onclick="submitCode()" class="bg-green-600 text-white py-2 px-6 rounded-lg">Submit Code</button>
+          <button onclick="nextQuestion()" class="bg-gray-600 text-white py-2 px-6 rounded-lg">Next Question</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="results-section" class="hidden mt-12">
+      <div class="card">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Evaluation Results</h2>
+        <div id="results-content" class="space-y-4"></div>
+      </div>
+    </div>
+  </div>
+  <div id="toast-container" class="fixed top-6 right-6 z-50 space-y-3"></div>
+  <script src="js/utils.js"></script>
+  <script type="module" src="js/api.js"></script>
+  <script type="module" src="js/components/toast.js"></script>
+  <script type="module" src="js/components/notifications.js"></script>
+  <script type="module" src="js/pages/practice.js"></script>
+</body>
+</html>

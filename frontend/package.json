@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "srm-study-buddy-frontend",
+  "version": "1.0.0",
+  "description": "SRM Study Buddy Frontend",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./styles/tailwind.css --watch",
+    "dev": "npm run build:css"
+  }
+}

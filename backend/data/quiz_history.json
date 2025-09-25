@@ -1,0 +1,47 @@
+[
+  {
+    "student_register_number": "RA2111003010001",
+    "score": 100,
+    "total_questions": 20,
+    "time_taken": "01:38",
+    "subject": "General Quiz",
+    "date": "2025-09-06T16:21:45.945712",
+    "quiz_id": "quiz_1_1757155905"
+  },
+  {
+    "student_register_number": "RA2111003010003",
+    "score": 80,
+    "total_questions": 20,
+    "time_taken": "02:27",
+    "subject": "General Quiz",
+    "date": "2025-09-07T23:35:01.063063",
+    "quiz_id": "quiz_2_1757268301"
+  },
+  {
+    "student_register_number": "RA2432242010021",
+    "score": 90,
+    "total_questions": 20,
+    "time_taken": "01:53",
+    "subject": "General Quiz",
+    "date": "2025-09-07T23:51:46.683919",
+    "quiz_id": "quiz_3_1757269306"
+  },
+  {
+    "student_register_number": "RA2432242010021",
+    "score": 90,
+    "total_questions": 20,
+    "time_taken": "01:45",
+    "subject": "General Quiz",
+    "date": "2025-09-18T23:58:30.149684",
+    "quiz_id": "quiz_4_1758220110"
+  },
+  {
+    "student_register_number": "RA2432242010026",
+    "score": 50,
+    "total_questions": 20,
+    "time_taken": "02:19",
+    "subject": "General Quiz",
+    "date": "2025-09-21T01:24:17.736987",
+    "quiz_id": "quiz_5_1758398057"
+  }
+]

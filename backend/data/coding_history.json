@@ -1,0 +1,62 @@
+[
+  {
+    "student_register_number": "RA2111003010001",
+    "question": "Write a Python program that declares a variable `is_adult` and assigns it a Boolean value representing whether someone is an adult (True or False).  Print the value of `is_adult` and its type.",
+    "score": 80,
+    "is_correct": true,
+    "time_taken": "N/A",
+    "subject": "Coding Practice",
+    "date": "2025-09-06T19:48:54.901392",
+    "coding_id": "code_1_1757168334"
+  },
+  {
+    "student_register_number": "RA2111003010003",
+    "question": "Create a Python program that declares a variable named `name` and assigns your name to it as a string. Then, print the value of the variable `name` to the console.",
+    "score": 80,
+    "is_correct": true,
+    "time_taken": "N/A",
+    "subject": "Coding Practice",
+    "date": "2025-09-06T21:29:09.624667",
+    "coding_id": "code_2_1757174349"
+  },
+  {
+    "student_register_number": "RA2432242010021",
+    "question": "Create a Python program that declares a variable named `name` and assigns your name to it as a string. Then, print the value of the `name` variable.",
+    "score": 20,
+    "is_correct": false,
+    "time_taken": "N/A",
+    "subject": "Coding Practice",
+    "date": "2025-09-07T23:47:18.280641",
+    "coding_id": "code_3_1757269038"
+  },
+  {
+    "student_register_number": "RA2432242010021",
+    "question": "Create a Python variable named `my_name` and assign your name (as a string) to it. Then, print the value of `my_name` to the console.",
+    "score": 80,
+    "is_correct": true,
+    "time_taken": "N/A",
+    "subject": "Coding Practice",
+    "date": "2025-09-18T23:53:49.324399",
+    "coding_id": "code_4_1758219829"
+  },
+  {
+    "student_register_number": "RA2432242010021",
+    "question": "Write a Python program that declares two variables, one storing your name as a string and the other storing your age as an integer.  Print both variables to the console.",
+    "score": 80,
+    "is_correct": true,
+    "time_taken": "N/A",
+    "subject": "Coding Practice",
+    "date": "2025-09-18T23:55:41.844671",
+    "coding_id": "code_5_1758219941"
+  },
+  {
+    "student_register_number": "RA2432242010026",
+    "question": "Write a Python function that takes a list of dictionaries as input. Each dictionary represents a product with 'name' and 'price' keys.  The function should return a new list containing only the products whose price is above the average price of all products. Use list comprehension and the sum() and len() functions for efficiency.",
+    "score": 90,
+    "is_correct": true,
+    "time_taken": "N/A",
+    "subject": "Coding Practice",
+    "date": "2025-09-21T01:58:37.071514",
+    "coding_id": "code_6_1758400117"
+  }
+]

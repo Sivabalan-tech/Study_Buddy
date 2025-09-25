@@ -1,0 +1,84 @@
+<!-- Results Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="path/to/your/favicon.ico" type="image/x-icon">
+  <title>Quiz Results</title>
+  <link rel="stylesheet" href="styles/globals.css"/>
+  <link rel="stylesheet" href="styles/components.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">SRM Study Buddy</h1>
+                </div>
+                <nav class="flex space-x-4">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="quiz.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Quiz</a>
+                    <a href="practice.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Practice</a>
+                    <a href="logs.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Study Log</a>
+                    <a href="feedback.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
+                    <a href="history.html" class="bg-blue-100 text-blue-700 px-3 py-2 rounded-md text-sm font-medium">History</a>
+                    <a href="communication-test.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Speech to Text</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Quiz Results</h2>
+            <p class="text-gray-600">View your quiz performance and detailed feedback.</p>
+        </div>
+
+    <div class="card mb-8 text-center">
+      <div class="text-5xl font-bold text-green-600 mb-2" id="overall-score">0%</div>
+      <p class="text-gray-600 mb-4">Overall Score</p>
+      <div class="grid grid-cols-3 gap-4 max-w-md mx-auto mb-6">
+        <div class="text-center"><div class="text-2xl font-bold text-blue-600" id="total-questions">0</div><div class="text-sm text-gray-600">Questions</div></div>
+        <div class="text-center"><div class="text-2xl font-bold text-green-600" id="correct-answers">0</div><div class="text-sm text-gray-600">Correct</div></div>
+        <div class="text-center"><div class="text-2xl font-bold text-red-600" id="incorrect-answers">0</div><div class="text-sm text-gray-600">Incorrect</div></div>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">Time Taken</h3>
+      <p class="text-gray-600" id="time-taken">00:00</p>
+    </div>
+
+    <div class="card">
+      <h2 class="text-xl font-semibold text-gray-800 mb-6">Question-by-Question Feedback</h2>
+      <div id="detailed-feedback" class="space-y-6"></div>
+    </div>
+
+    <div class="card mt-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Suggestions for Improvement</h2>
+      <p class="text-gray-700" id="suggestions-text">—</p>
+    </div>
+
+    <div class="flex gap-3 justify-center mt-8">
+      <button onclick="saveResults()" class="bg-green-600 text-white px-6 py-3 rounded-lg">Save Results to History</button>
+      <button onclick="retryQuiz()" class="bg-blue-600 text-white px-6 py-3 rounded-lg">Try Again</button>
+      <button onclick="navigateTo('quiz.html')" class="bg-gray-600 text-white px-6 py-3 rounded-lg">New Quiz</button>
+    </div>
+  </div>
+
+  <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+  <script type="module">
+    // Import required modules
+    import { navigateTo } from './js/utils.js';
+    import { showToast } from './js/components/toast.js';
+    import { saveResults, retryQuiz } from './js/pages/results.js';
+    
+    // Make them globally available for inline event handlers
+    window.navigateTo = navigateTo;
+    window.showToast = showToast;
+    window.saveResults = saveResults;
+    window.retryQuiz = retryQuiz;
+  </script>
+</body>
+</html>

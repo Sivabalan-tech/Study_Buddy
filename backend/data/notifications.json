@@ -1,0 +1,26 @@
+[
+  {
+    "id": "6512a249-664e-4f6c-982c-00358a0d1fe4",
+    "user_id": "RA2432242010026",
+    "title": "New Feedback Received",
+    "message": "Teacher TEACH001 has provided general feedback for you.",
+    "type": "feedback",
+    "status": "read",
+    "related_id": "fb_12_1758399807",
+    "teacher_name": "TEACH001",
+    "created_at": "2025-09-21T01:53:27.778292",
+    "read_at": "2025-09-21T01:54:34.429363"
+  },
+  {
+    "id": "a051fc4e-6442-46dc-84b8-61c518ce0c53",
+    "user_id": "RA2432242010021",
+    "title": "New Feedback Received",
+    "message": "Teacher TEACH001 has provided general feedback for you.",
+    "type": "feedback",
+    "status": "read",
+    "related_id": "fb_13_1758461936",
+    "teacher_name": "TEACH001",
+    "created_at": "2025-09-21T19:08:56.946874",
+    "read_at": "2025-09-21T19:09:27.805165"
+  }
+]

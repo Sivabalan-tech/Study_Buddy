@@ -1,0 +1,25 @@
+# Add Python dependencies here
+fastapi>=0.110,<1
+uvicorn[standard]>=0.23
+pydantic>=2.6
+python-dotenv>=1.0
+google-generativeai>=0.7.2
+anyio>=4.2
+bcrypt
+
+# Speech recognition and audio processing
+SpeechRecognition==3.10.0
+pyaudio==0.2.11
+pydub==0.25.1
+
+# Web framework and API
+fastapi==0.104.1
+uvicorn==0.24.0
+python-multipart==0.0.6
+pydantic==2.5.0
+
+# Data processing and utilities
+python-dotenv==1.0.0
+google-generativeai>=0.7.2
+anyio>=4.2
+bcrypt

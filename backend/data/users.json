@@ -1,0 +1,42 @@
+[
+  {
+    "user_id": "student_001",
+    "username": "RA2111003010001",
+    "password": "$2b$12$M5rOav0CZxATpUn4TCPXNOfDqLlHXYowqgAR/tCXZhZljHGOoYA1W",
+    "user_type": "student",
+    "full_name": "John Doe",
+    "email": "john.doe@srmist.edu.in"
+  },
+  {
+    "user_id": "teacher_001",
+    "username": "TEACH001",
+    "password": "$2b$12$LwV8cvpDAkcvHs1hlGuGlO.pbdl24KgFAsVvCNZlkbNyB5.puP12O",
+    "user_type": "teacher",
+    "full_name": "Dr. Jane Smith",
+    "email": "jane.smith@srmist.edu.in"
+  },
+  {
+    "user_id": "student_003",
+    "username": "RA2111003010003",
+    "password": "$2b$12$yeAk2yqrKXQ6SdBaTZm6vemXfJ0hSErr67ovldMSx906i9dK0VEc.",
+    "user_type": "student",
+    "full_name": "Sivabalan",
+    "email": "ssivabalan174@gmail.com"
+  },
+  {
+    "user_id": "student_004",
+    "username": "RA2432242010021",
+    "password": "$2b$12$rVOVce8UZbXJ1dqEEpXbGeYwUjnoA2xfLdYkRQxsitdc5bu1W9oCi",
+    "user_type": "student",
+    "full_name": "Sivabalan",
+    "email": "ssivabalan174@gmail.com"
+  },
+  {
+    "user_id": "student_005",
+    "username": "RA2432242010026",
+    "password": "$2b$12$EkeNV1TY81CDx5vRi8686.dYUVy0wezP9P25K8Luz3UXkPbiXeO0K",
+    "user_type": "student",
+    "full_name": "Shiva",
+    "email": "21ucs034siva@gmail.com"
+  }
+]

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Practice - SRM Study Buddy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles/globals.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <style>
+        .recording-indicator {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .score-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        
+        .audio-visualizer {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            height: 40px;
+        }
+        
+        .audio-bar {
+            width: 3px;
+            background: linear-gradient(to top, #3b82f6, #1d4ed8);
+            border-radius: 2px;
+            animation: audioWave 1s ease-in-out infinite;
+        }
+        
+        .audio-bar:nth-child(2) { animation-delay: 0.1s; }
+        .audio-bar:nth-child(3) { animation-delay: 0.2s; }
+        .audio-bar:nth-child(4) { animation-delay: 0.3s; }
+        .audio-bar:nth-child(5) { animation-delay: 0.4s; }
+        
+        @keyframes audioWave {
+            0%, 100% { height: 10px; }
+            50% { height: 30px; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">SRM Study Buddy</h1>
+                </div>
+                <nav class="flex space-x-4">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="logs.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Study Log</a>
+                    <a href="quiz.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Quiz</a>
+                    <a href="practice.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Practice</a>
+                    <a href="communication-test.html" class="bg-blue-100 text-blue-700 px-3 py-2 rounded-md text-sm font-medium">Speech Practice</a>
+                    <a href="feedback.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Feedback</a>
+                    <a href="history.html" class="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">History</a>
+                    <div id="notification-container"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Speech Practice</h2>
+            <p class="text-gray-600">Practice and improve your communication skills with speech analysis and feedback.</p>
+        </div>
+
+        <!-- Test Interface -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Recording Section -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="card-icon hover-rotate">
+                  <span class="text-4xl">📝</span>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-3">Speech Recording</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Convert your spoken words into accurate text with advanced transcription</p>
+                <div class="mt-4 text-primary-600 font-medium text-sm flex items-center gap-2">
+                  Start Transcribing <span class="text-lg">→</span>
+                </div>
+                
+                <!-- Recording Controls -->
+                <div class="space-y-4">
+                    <div class="text-center">
+                        <button id="startRecording" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center mx-auto">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                            </svg>
+                            Start Recording
+                        </button>
+                        
+                        <button id="stopRecording" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center mx-auto hidden">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"></path>
+                            </svg>
+                            Stop Recording
+                        </button>
+                    </div>
+
+                    <!-- Recording Status -->
+                    <div id="recordingStatus" class="text-center hidden">
+                        <div class="recording-indicator inline-flex items-center px-4 py-2 bg-red-100 text-red-800 rounded-full">
+                            <div class="w-3 h-3 bg-red-600 rounded-full mr-2"></div>
+                            Recording...
+                        </div>
+                        <div class="audio-visualizer justify-center mt-4">
+                            <div class="audio-bar"></div>
+                            <div class="audio-bar"></div>
+                            <div class="audio-bar"></div>
+                            <div class="audio-bar"></div>
+                            <div class="audio-bar"></div>
+                        </div>
+                    </div>
+
+                    <!-- Audio Playback -->
+                    <div id="audioPlayback" class="hidden">
+                        <h4 class="font-medium text-gray-900 mb-2">Your Recording:</h4>
+                        <audio id="recordedAudio" controls class="w-full"></audio>
+                        <div class="mt-2 space-x-2">
+                            <button id="playRecording" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm">
+                                Play
+                            </button>
+                            <button id="reRecord" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded text-sm">
+                                Re-record
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Prompt -->
+                <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                    <h4 class="font-medium text-blue-900 mb-2">Sample Prompt:</h4>
+                    <p class="text-blue-800 text-sm">"Hello, my name is [Your Name] and I'm excited to be here today. I believe effective communication is essential for success in both personal and professional relationships."</p>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Transcription Results</h3>
+                
+                <!-- Loading State -->
+                <div id="loadingResults" class="text-center py-8 hidden">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <p class="mt-2 text-gray-600">Analyzing your speech...</p>
+                </div>
+
+                <!-- Results Display -->
+                <div id="resultsDisplay" class="hidden space-y-6">
+                    <!-- Transcription -->
+                    <div>
+                        <h4 class="font-medium text-gray-900 mb-2">Transcribed Text:</h4>
+                        <div id="transcriptionText" class="bg-gray-50 p-4 rounded-md text-gray-700 border-l-4 border-blue-500 text-lg leading-relaxed"></div>
+                    </div>
+
+                    <!-- Transcription Info -->
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="flex items-center mb-2">
+                            <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <h4 class="font-medium text-blue-900">Communication Analysis Complete</h4>
+                        </div>
+                        <p class="text-blue-800 text-sm">Your speech has been analyzed for communication effectiveness. See your scores below.</p>
+                    </div>
+
+                    <!-- Evaluation Scores -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Overall Score -->
+                        <div class="bg-gradient-to-r from-purple-50 to-purple-100 p-4 rounded-lg border border-purple-200 md:col-span-2">
+                            <div class="flex items-center justify-between mb-2">
+                                <h5 class="font-medium text-purple-900 flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                    </svg>
+                                    Overall Communication Score
+                                </h5>
+                                <span id="overallScore" class="text-3xl font-bold text-purple-700">--</span>
+                            </div>
+                            <div class="w-full bg-purple-200 rounded-full h-3">
+                                <div id="overallScoreBar" class="score-bar bg-purple-600 h-3 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <p class="text-purple-800 text-sm mt-2">Average of Clarity and Confidence scores</p>
+                        </div>
+
+                        <!-- Clarity Score -->
+                        <div class="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg border border-green-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <h5 class="font-medium text-green-900 flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                    </svg>
+                                    Clarity
+                                </h5>
+                                <span id="clarityScore" class="text-2xl font-bold text-green-700">--</span>
+                            </div>
+                            <div class="w-full bg-green-200 rounded-full h-2">
+                                <div id="clarityBar" class="score-bar bg-green-600 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <p class="text-green-800 text-sm mt-2">How clearly you articulate your words and ideas</p>
+                        </div>
+
+                        <!-- Confidence Score -->
+                        <div class="bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg border border-blue-200">
+                            <div class="flex items-center justify-between mb-2">
+                                <h5 class="font-medium text-blue-900 flex items-center">
+                                    <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                    Confidence
+                                </h5>
+                                <span id="confidenceScore" class="text-2xl font-bold text-blue-700">--</span>
+                            </div>
+                            <div class="w-full bg-blue-200 rounded-full h-2">
+                                <div id="confidenceBar" class="score-bar bg-blue-600 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <p class="text-blue-800 text-sm mt-2">How confidently you deliver your message</p>
+                        </div>
+                    </div>
+
+                    <!-- AI Feedback -->
+                    <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-purple-500">
+                        <h5 class="font-medium text-gray-900 mb-2 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                            AI Feedback
+                        </h5>
+                        <div id="aiFeedback" class="text-gray-700 leading-relaxed">
+                            <em class="text-gray-500">Analysis in progress...</em>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex space-x-3 pt-4 border-t">
+                        <button id="saveToHistory" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200 flex items-center justify-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                            </svg>
+                            Save to History
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Initial State -->
+                <div id="initialState" class="text-center py-8">
+                    <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <p class="text-gray-600">Record your speech to convert it to text</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-6 right-6 z-50 space-y-3"></div>
+
+    <script type="module" src="js/utils.js"></script>
+    <script type="module" src="js/api.js"></script>
+    <script type="module" src="js/components/toast.js"></script>
+    <script type="module" src="js/components/notifications.js"></script>
+    <script type="module" src="js/pages/communication-test.js"></script>
+</body>
+</html>
